@@ -16,8 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from instagram import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('instagram.urls')),
-    
+    path('accounts/profile/',views.profile,name = 'profile'),
+    # url(r'^profile/(\d+)',views.other_profile,name = 'visitprofile'),
+    # url(r'^search/profile$', views.search, name='profileresults'),
+    # url(r'^timeline$', views.timeline, name='timeline'),
+    # url(r'^edit_profile$', views.edit_profile, name='edit'),
+
 ]
