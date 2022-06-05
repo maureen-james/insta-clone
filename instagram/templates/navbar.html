@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light">
+<!-- <nav class="navbar navbar-expand-lg navbar-light">
     <a class="navbar-brand" style="font-size: 20px;" href="/">INSTAGRAM</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,4 +12,80 @@
          
       </ul>
     </div>
-</nav>    
+</nav>     -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div class="nav sticky-top" role="navigation" id="colored-nav">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div>
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </div>
+            </div>
+            <div class="nav navbar-nav navbar-left">
+                <ul class="nav">
+                    <li style="margin-right:2%;margin-top:1%;">
+                        <a href="{%url 'timeline' %}">
+                            <i class="fab fa-instagram" style="font-size:30px;"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{%url 'timeline' %}" class="nav-link" id="logo">InstagramNight</a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{%url 'profileresults' %}" role="search" class="form-inline" style="margin-top:1%;">
+                            <input type="text" style="width:300px;background: transparent;" class="form-control" placeholder="Search by username"
+                                name="username">
+                        </form>
+                    </li>
+                    <li id="icon">
+                        <a href="" class="nav-link">
+                            <i class="fas fa-compass"></i>
+                        </a>
+                    </li>
+                    <li id="icon">
+                        <a href="" class="nav-link" id="heart">
+                            <i class="fas fa-heart"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown" id="icon">
+                        <a href="" class="nav-link" lass="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        {% if user.is_authenticated %}
+                            <ul class="dropdown-menu" role="menu" style="background-color:#131413;">
+                              <li>
+                                <a href="{%url 'profile' %}">Account</a>
+                              </li>
+                              <li>
+                                <a href="/accounts/password/change">Change Password</a>
+                              </li>
+                              <li>
+                                <a href="/logout">Logout</a>
+                              </li>
+                            </ul>
+                        {% else %}
+                        <li>
+                          <a class='btn btn-default' href="/accounts/login">Login</a>
+                        </li>
+            
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
