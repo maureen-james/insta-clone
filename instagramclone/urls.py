@@ -13,18 +13,32 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import include, path
+# from django.contrib import admin
+# from django.urls import include, path
 
-from instagram import views
+# from instagram import views
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#     path('',include('instagram.urls')),
+#     path('accounts/profile/',views.profile,name = 'profile'),
+#     # url(r'^profile/(\d+)',views.other_profile,name = 'visitprofile'),
+#     # url(r'^search/profile$', views.search, name='profileresults'),
+#     # url(r'^timeline$', views.timeline, name='timeline'),
+#     # url(r'^edit_profile$', views.edit_profile, name='edit'),
+
+# ]
+
+from django.conf.urls import url,include
+from django.contrib.auth import views 
+from django.contrib import admin
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',include('instagram.urls')),
-    path('accounts/profile/',views.profile,name = 'profile'),
-    # url(r'^profile/(\d+)',views.other_profile,name = 'visitprofile'),
-    # url(r'^search/profile$', views.search, name='profileresults'),
-    # url(r'^timeline$', views.timeline, name='timeline'),
-    # url(r'^edit_profile$', views.edit_profile, name='edit'),
-
+    url(r'^admin/', admin.site.urls),
+    url(r'',include('instagram.urls')),
+    url(r'^accounts/', include('registration.backends.simple.urls')),
+    url(r'^logout/$', views.logout, {"next_page": '/'}),
+    
 ]
+
+
