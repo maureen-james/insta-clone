@@ -4,14 +4,7 @@
 
 <div class="container-fluid" id="profile">
     <div class="row" id="top">
-        <div class="col-sm-1 col-md-2" style="margin-top: 7%;">
-            <p>FOLLOWING</p>
-            <p>{{followingcount}}</p>
-        </div>
-        <div class="col-sm-1 col-md-2" style="margin-top: 7%;">
-            <p>FOLLOWERS</p>
-            <p>{{followercount}}</p>
-        </div>
+
         <div class="col-sm-2 col-md-4">
             {% if user.profile.profile_pic.url %}
             <img src="{{user.profile.profile_pic.url}}" alt="" id="profilepic" class="img-fluid">
@@ -23,8 +16,18 @@
                 <input type="submit" class="btn-lg btn-outline-info" value="Add Profile">
             </form>
             {% endif %}
-            <h3 style="margin-top:7%;letter-spacing:5px;font:bold;font-size: 50px;">@{{user.username}}</h3>
+            <h3 style="margin-top:7%;letter-spacing:5px;font:bold;font-size: 50px;color: black;">@{{user.username}}</h3>
         </div>
+        <div class="col-sm-1 col-md-2" style="margin-top: 7%;color: black;">
+            <p>FOLLOWING</p>
+            <p>{{followingcount}}</p>
+        </div>
+        <div class="col-sm-1 col-md-2" style="margin-top: 7%; color: black;">
+            <p>FOLLOWERS</p>
+            <p>{{followercount}}</p>
+        </div>
+
+
         <div class="col-sm-1 col-md-2" style="margin-top: 7%;">
             <button type="button" class="btn-lg btn-outline-success">FOLLOW</button>
         </div>
@@ -32,24 +35,24 @@
             <button type="button" class="btn-lg btn-outline-info">MESSAGE</button>
         </div>
     </div>
-    <div style="margin-top:1%;">
+    <div style="margin-top:1%;color: black;">
         <p>{{user.profile.bio}}</p>
     </div>
     <div class="row" id="stories">
         <div class="col-sm-2 col-md-3">
             <div id="story">
             </div>
-            <h4 style="margin-top:5%;font:bold;font-size: 20px;">Stories</h4>
+            <h4 style="margin-top:5%;font:bold;font-size: 20px;color: black;">Stories</h4>
         </div>
         <div class="col-sm-2 col-md-3">
             <div id="story">
             </div>
-            <h4 style="margin-top:5%;font:bold;font-size: 20px;">coming</h4>
+            <h4 style="margin-top:5%;font:bold;font-size: 20px;color: black;">coming</h4>
         </div>
         <div class="col-sm-2 col-md-3">
             <div id="story">
             </div>
-            <h4 style="margin-top:5%;font:bold;font-size: 20px;">soon!</h4>
+            <h4 style="margin-top:5%;font:bold;font-size: 20px;color: black;">soon!</h4>
         </div>
     </div>
     <div class="nav navbar-nav" role="navigation">
@@ -104,6 +107,25 @@
                 <div id="child">
                     <img src="{{post.pic.url}}" alt="" id="post" class="img-fluid">
                 </div>
+                <div class="card-body">
+                    <div class="flex">
+
+                        <div class="ml-3">
+                            <a href="post/{{image.id}}/like"><i class="fas fa-heart like_u">like</i></a>
+
+                        </div>
+                        <div class="ml-3">
+                            <a href="post/{{image.id}}"> <i class="far fa-comment" style="color: black;">comment</i></a>
+                            </p>
+
+                        </div>
+                        <div class="ml-3">
+                            <a href="#"><i class="fas fa-share-alt">share</i></a>
+                        </div>
+                        <div class="ml-3">
+                            <a href="#"><i class="far fa-bookmark">bookmark</i></a>
+                        </div>
+                    </div>
                 {% endif %}
             {% endfor %}
         </div>
