@@ -13,7 +13,7 @@
             </div>
             <div class="row" id="suggestions">
                 <div class="col-md-11 col-sm-11">
-                    <h5 style="color:gray;">Following</h5>
+                    <h5 style="color:black;">Following</h5>
                     {% for follow in follows %}
                     {% if follow.followed == user.username %}
                     <div class="row" id="suggestion">
@@ -64,10 +64,7 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="row" style="margin-top: 5%;">
-                <p style="color:grey;font-size: 12px;padding-left:40%;">created by Esther Muigai. Inspiration:Instagram
-                </p>
-            </div>
+
         </div>
         <div class="col-md-1 col-sm-1"></div>
         <div class="col-md-7 col-sm-7" id="othersposts">
