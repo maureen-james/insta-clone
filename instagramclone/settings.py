@@ -15,6 +15,8 @@ from pathlib import Path
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import dj_database_url
+from decouple import config
 
 
 # adding config
@@ -89,12 +91,19 @@ WSGI_APPLICATION = 'instagramclone.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+DATABASE_URL =  'postgres://tlxjbzxhzkkrjq:08388b5f7213fe3782c17bbb1f51f1d2a9ec4b2a85cd037c95b7332178b6e579@ec2-54-165-178-178.compute-1.amazonaws.com:5432/deqnhqbnnh9ubp'
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+    'default': dj_database_url.config(
+        default = config('DATABASE_URL')
+    )
+} 
 
 
 # Password validation
