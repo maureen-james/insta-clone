@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="row justify-content-center pt-4">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="input-group mb-3" i>
+            {{ form.comment }}
+        <div class='input-group-append'>
+            <button class='btn btn-outline-info' type='submit' >Post</button>
+        </div>
+        </fieldset>
+    </form>
+</div>
+<div class="w-75 vh-100">
+    <div class="row w-75 m-auto mt-5">
+        <div class="col-md-6">
+            <div class="">
+
+                {% if comment%}
+                {% for comment in comment %}
+                <h6> {%if post.user.profile.profile_pic %}
+                    <img src="{{comment.user.profile.profile_photo.url}}" alt="" class="icon">{% endif %}
+                    <b>{{comment.user}}</b> {{comment.comment}}</h6>
+                {% endfor %}
+                {% else%}
+                <p>No comments yet</p>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    {%endblock%}

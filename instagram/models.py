@@ -27,14 +27,43 @@ class Following(models.Model):
         return f'{self.username}'
 
 class Comment(models.Model):
-    post = models.IntegerField(default=0)
-    username = models.CharField(blank=True,max_length = 255)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     count = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.username}'
+
+class Likes(models.Model):
+    post = models.ForeignKey(Post,related_name='like_count', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.post
+    def save_likes(self):
+        self.save()
+
+    # update like
+    def update_likes(self, name):
+        self.name = name
+        self.save()
+
+     # delete like from database
+    def delete_likes(self):
+        self.delete()
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'post'], name="unique_like"),
+        ] 
+class Follower(models.Model):
+    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')
+    being_followed = models.ForeignKey(User, on_delete=models.CASCADE, related_name='being_followeds')
+
+    def __str__(self):
+        return f'{self.follower.user, self.being_followed.user} follower-> followee'
+    
+
 
 
 

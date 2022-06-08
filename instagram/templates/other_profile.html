@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-{% include 'navbar.html' %}
+
 <div class="container-fluid" id="profile">
     <div class="row" id="top">
+        <div class="col-sm-2 col-md-4">
+            <img src="{{profile_user.profile.profile_pic.url}}" alt="" id="profilepic" class="img-fluid">
+            <h3 style="margin-top:7%;letter-spacing:5px;font:bold;font-size: 50px;">{{profile_user.username}}</h3>
+        </div>
         <div class="col-sm-1 col-md-2" style="margin-top: 7%;">
             <p>FOLLOWING</p>
             <p>{{followingcount}}</p>
@@ -11,13 +15,15 @@
             <p>FOLLOWERS</p>
             <p>{{followercount}}</p>
         </div>
-        <div class="col-sm-2 col-md-4">
-            <img src="{{profile_user.profile.profile_pic.url}}" alt="" id="profilepic" class="img-fluid">
-            <h3 style="margin-top:7%;letter-spacing:5px;font:bold;font-size: 50px;">{{profile_user.username}}</h3>
+        <div class="col-sm-1 col-md-2" style="margin-top: 7%;">
+            <button type="button" class="btn-lg btn-outline-success">FOLLOW</button>
+
         </div>
+
         <div class="col-sm-3 col-md-3" style="margin-top: 7%;">
             <button type="button" class="btn-lg btn-outline-info">MESSAGE</button>
         </div>
+        
     </div>
     <div style="margin-top:1%;">
         <p>{{profile_user.profile.bio}}</p>
@@ -71,7 +77,7 @@
             {% for post in posts %}
                 {% if profile_user.profile.id == post.profile.id %}
                 <div id="child">
-                    <img src="{{post.pic.url}}" alt="" id="post" class="img-fluid">
+                    <img src="{{post.pic.url}}" alt="" id="post">
                 </div>
                 {% endif %}
             {% endfor %}

@@ -1,10 +1,14 @@
-from django.shortcuts import render,redirect
+from typing_extensions import Self
+from django.shortcuts import get_object_or_404, render,redirect
 from django.http  import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from .models import Profile,Post,Following,Comment
-from .forms import DetailsForm,PostForm
+from django.views.generic import ListView
+from .models import Follower, Likes, Profile,Post,Following,Comment
+from .forms import CommentForm, DetailsForm,PostForm
 from django.db.models import F
+from django.db.models import Q
 
 def welcome(request):
     return render(request, 'welcome.html')
@@ -44,6 +48,7 @@ def timeline(request):
     posts = Post.objects.all()
     follows = Following.objects.all()
     comments = Comment.objects.all()
+
     if request.method=='POST' and 'follow' in request.POST:
         following=Following(username=request.POST.get("follow"),followed=request.user.username)
         following.save()
@@ -108,6 +113,62 @@ def search(request):
             message = f"{search_term}"
             return render(request, 'other_profile.html',{"profile_user": searched_user,"posts":posts,"followingcount":followingcount,"followercount":followercount})
         else:
-            message = "The username you are searching for does not exist.Thank you for visiting InstaNight."
+            message = "The username you are searching for does not exist."
             return render(request, 'notfound.html',{"message":message})
-    
+
+def like_post(request, post_id):
+    post = get_object_or_404(Post,id = post_id)
+    like = Likes.objects.filter(post = post ,user = request.user).first()
+    if like is None:
+        like = Likes()
+        like.post = post
+        like.user = request.user
+        like.save()
+    else:
+        like.delete()
+    return redirect('timeline')  
+
+def single_comment(request, post_id):
+    post = get_object_or_404(Post,id = post_id)
+    # comment = Comment.objects.filter(post = post ,user = request.id).first()
+    comment=Comment.objects.filter(post=post).all()
+    current_user=request.user
+
+    if request.method =='POST':
+        form = CommentForm(request.POST)
+        
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = current_user
+            
+            comment.post = post
+            comment.save()
+        return redirect('timeline')
+    else:
+        
+        form = CommentForm()
+    return render(request, 'comment.html', {'post': post, 'form':form, 'comment':comment})  
+
+
+def follow(request):
+    if request.method == 'GET':
+        user_id = request.GET['user_id']
+        usertofollow = User.objects.get(pk=user_id)  # getting the user to follow
+
+        if Follower.objects.filter(being_followed=usertofollow, follower=request.user).exists():
+            Follower.objects.filter(being_followed=usertofollow, follower=request.user).delete()
+        else:
+            m = Follower(being_followed=usertofollow, follower=request.user)  # creating like object
+            m.save()  # saves into database
+        return HttpResponse(usertofollow.being_followeds.count())
+    else:
+        return HttpResponse("Request method is not a GET")
+        
+class FollowerListView(LoginRequiredMixin, ListView):
+    model = Follower
+
+    def get_queryset(self):
+        # org qs
+        qs = super().get_queryset()
+        # filter by var from captured url
+        return qs.filter(Q(follower__username=self.kwargs['username']) | Q(being_followed__username=self.kwargs['username']))
