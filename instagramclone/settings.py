@@ -12,6 +12,17 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+
+# adding config
+cloudinary.config( 
+  cloud_name = "mohimages", 
+  api_key = "734511936579581", 
+  api_secret = "hkldfnCoEWowLqHbM8573WqoNw4", 
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +52,7 @@ INSTALLED_APPS = [
     'instagram',
     'bootstrap4',
     'crispy_forms',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +147,6 @@ LOGIN_REDIRECT_URL = 'timeline'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+import django_heroku
+django_heroku.settings(locals())

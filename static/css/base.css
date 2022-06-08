@@ -35,15 +35,15 @@ body {
 
 #demo {
     float:right;
-    background-image: url(./);
+    /* background-color: blueviolet; */
 }
 
 #demopic {
-    background-color: #131413;
+    /* background-color: #56ce56; */
     border-radius: 3%;
     border: solid 1px gray;
     z-index:2;
-    height:80%;
+    height:30%;
     margin-top: 10%;
     margin-left:53%;
     width:43.5%;
